@@ -7,8 +7,4 @@ package frc.robot;
 import org.littletonrobotics.junction.LoggedRobot;
 
 public class Robot extends LoggedRobot {
-  public Robot() {}
-
-  @Override
-  public void teleopPeriodic() {}
 }
