@@ -22,13 +22,13 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopPeriodic() {  
-   double sped = -xbox.getLeftY();
+   double speed = -xbox.getLeftY();
    boolean hasCone = intakeMotor.getReverseLimit().getValue().value == 1;
    
     if (hasCone){
-        intakeMotor.set(Math.min(sped, 0.1));
+        intakeMotor.set(Math.min(speed, 0.1));
     } else {
-        intakeMotor.set(Math.max(sped, -0.1));
+        intakeMotor.set(Math.max(speed, -0.1));
     }
     System.out.println(intakeMotor.getReverseLimit().getValue().value);
 
