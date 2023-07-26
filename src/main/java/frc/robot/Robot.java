@@ -22,7 +22,7 @@ public class Robot extends LoggedRobot {
     double leftY = xbox.getLeftY();
     double leftY = xbox.getLeftY();
     double rightX = xbox.getRightX();
-
+ // idk
     double leftSpeed = leftY + rightx;
     double rightSpeed = leftY - rightx;
 
