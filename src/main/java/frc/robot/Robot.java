@@ -21,12 +21,12 @@ public class Robot extends LoggedRobot {
     double rightY = xbox.getRightY();
     double leftY = -xbox.getLeftY();
     double rightX = xbox.getRightX();
-    double leftSpeed = xbox.getRightX() + xbox.getLeftY();
+    double leftSideSpeed = xbox.getRightX() + xbox.getLeftY();
     double rightSpeed = xbox.getLeftY() - xbox.getRightX();
 
     driveFrontRight.set(ControlMode.PercentOutput, rightSpeed);
-    driveFrontLeft.set(ControlMode.PercentOutput, leftSpeed);
-    driveRearLeft.set(ControlMode.PercentOutput, leftSpeed);
+    driveFrontLeft.set(ControlMode.PercentOutput, leftSideSpeed);
+    driveRearLeft.set(ControlMode.PercentOutput, leftSideSpeed);
     driveRearRight.set(ControlMode.PercentOutput, rightSpeed);
 }
 }
