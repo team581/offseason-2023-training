@@ -22,8 +22,8 @@ public class Robot extends LoggedRobot {
     //double leftY = -xbox.getLeftY();
     double leftX = xbox.getLeftX();
 
-    double leftSpeed = rightY + leftX;
-    double rightSpeed = rightY - leftX;
+    double rightspeed = rightY + leftX;
+    double leftSpeed = rightY - leftX;
 
     driveRightAMotor.set(ControlMode.PercentOutput, rightSpeed);
     driveRightBMotor.set(ControlMode.PercentOutput, rightSpeed);
