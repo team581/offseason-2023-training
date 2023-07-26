@@ -24,10 +24,10 @@ public class Robot extends LoggedRobot {
     frontLeft.enableCurrentLimit(true);
     rearRight.enableCurrentLimit(true);
     rearLeft.enableCurrentLimit(true);
-    frontRight.configPeakCurrentLimit(50);
-    frontLeft.configPeakCurrentLimit(50);
-    rearRight.configPeakCurrentLimit(50);
-    rearLeft.configPeakCurrentLimit(50);
+    frontRight.configPeakCurrentLimit(51);
+    frontLeft.configPeakCurrentLimit(51);
+    rearRight.configPeakCurrentLimit(51);
+    rearLeft.configPeakCurrentLimit(51);
   }
 
   @Override
