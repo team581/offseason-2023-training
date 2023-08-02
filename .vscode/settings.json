@@ -26,7 +26,7 @@
     "**/.git": true,
     "**/.hg": true
   },
-  "[java]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
+  "[java]": {"editor.defaultFormatter": "redhat.java"},
   "[json]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
   "[ignore]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
