@@ -33,11 +33,19 @@ public class Robot extends LoggedRobot {
   }
 
   public void setWristAngle(double degrees, double currentRotation) {
-    if (Rotation2d.fromDegrees(degrees).getRotations()<currentRotation) {
+    double setDegrees = Rotation2d.fromDegrees(degrees).getRotations();
+
+    if (setDegrees<currentRotation) {
       armMotor.setControl(armVoltage.withOutput(0.2));
-    } else if (Rotation2d.fromDegrees(degrees).getRotations()>currentRotation) {
+      if(setDegrees==currentRotation){
+        armMotor.setControl(armVoltage.withOutput(0));
+      }
+    } else if (setDegrees>currentRotation) {
       armMotor.setControl(armVoltage.withOutput(-0.2));
-    } else if (Rotation2d.fromDegrees(degrees).getRotations()== currentRotation) {
+      if(setDegrees==currentRotation){
+        armMotor.setControl(armVoltage.withOutput(0));
+      }
+    } else if (setDegrees== currentRotation) {
       armMotor.setControl(armVoltage.withOutput(0));
     }
   }
