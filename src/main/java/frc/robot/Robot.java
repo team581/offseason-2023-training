@@ -18,7 +18,6 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 
 public class Robot extends LoggedRobot {
-  private XboxController xboxController = new XboxController(0);
   private WristSubsystem wrist = new WristSubsystem(new TalonFX(16));
   private final CommandXboxController controller =
       new CommandXboxController(0);
