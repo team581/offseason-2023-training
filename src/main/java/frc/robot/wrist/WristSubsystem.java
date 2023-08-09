@@ -56,15 +56,28 @@ public class WristSubsystem extends LifecycleSubsystem {
   }
 
   public Command setPositionCommand(double angle) {
-    return runOnce(
-        () -> {
+    return run(() -> {
           goalAngle = angle;
           active = true;
-        });
+        })
+        .until(() -> atAngle(angle));
+  }
+
+  public Command getPositionSequenceCommand() {
+    return setPositionCommand(10).andThen(setPositionCommand(50)).andThen(setPositionCommand(10));
   }
 
   private double getWristAngle() {
     StatusSignal<Double> wristMotorRotations = motor.getRotorPosition();
     return wristMotorRotations.getValue() / 50.0 * 360.0;
+  }
+
+  private boolean atAngle(double targetAngle) {
+    if (targetAngle - wristTolerance < getWristAngle()
+        && targetAngle + wristTolerance > getWristAngle()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
