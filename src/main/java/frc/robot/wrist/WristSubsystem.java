@@ -4,10 +4,13 @@
 
 package frc.robot.wrist;
 
+import java.lang.ModuleLayer.Controller;
+
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.util.scheduling.LifecycleSubsystem;
 import frc.robot.util.scheduling.SubsystemPriority;
 
@@ -57,14 +60,24 @@ public class WristSubsystem extends LifecycleSubsystem {
 
   public Command setPositionCommand(double angle) {
     return runOnce(
-        () -> {
-          goalAngle = angle;
-          active = true;
-        });
+            () -> {
+              goalAngle = angle;
+              active = true;
+            })
+        .until(() -> atAngle(angle));
   }
 
   private double getWristAngle() {
     StatusSignal<Double> wristMotorRotations = motor.getRotorPosition();
     return wristMotorRotations.getValue() / 50.0 * 360.0;
+  }
+
+  // 10 50 10
+  public boolean atAngle(double angle) {
+
+    return (angle >= getWristAngle() - wristTolerance && getWristAngle() + wristTolerance >= angle);
+  }
+  public Command getPositionSequenceCommand(){
+return Commands.sequence(setPositionCommand(10),setPositionCommand(50),setPositionCommand(10));
   }
 }
