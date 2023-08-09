@@ -26,6 +26,7 @@ public class Robot extends LoggedRobot {
     controller.b().onTrue(wrist.getZeroCommand());
     controller.x().onTrue(wrist.setPositionCommand(10));
     controller.y().onTrue(wrist.setPositionCommand(50));
+    controller.rightBumper().onTrue(wrist.getPositionSequenceCommand());
   }
 
   @Override

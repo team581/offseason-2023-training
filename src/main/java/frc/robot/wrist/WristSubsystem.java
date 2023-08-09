@@ -8,6 +8,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.util.scheduling.LifecycleSubsystem;
 import frc.robot.util.scheduling.SubsystemPriority;
 
@@ -40,6 +41,15 @@ public class WristSubsystem extends LifecycleSubsystem {
     }
   }
 
+  public boolean atAngle(double angle) {
+    return getWristAngle() > angle - wristTolerance && getWristAngle() < angle + wristTolerance;
+  }
+
+  public Command getPositionSequenceCommand() {
+    return Commands.sequence(
+        setPositionCommand(10), setPositionCommand(50), setPositionCommand(10));
+  }
+
   public Command getZeroCommand() {
     return runOnce(
         () -> {
@@ -56,11 +66,11 @@ public class WristSubsystem extends LifecycleSubsystem {
   }
 
   public Command setPositionCommand(double angle) {
-    return runOnce(
-        () -> {
+    return run(() -> {
           goalAngle = angle;
           active = true;
-        });
+        })
+        .until(() -> goalAngle == angle);
   }
 
   private double getWristAngle() {
