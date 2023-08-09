@@ -24,6 +24,16 @@ public class WristSubsystem extends LifecycleSubsystem {
 
     this.motor = motor;
   }
+  public boolean atAngle(double angle) {
+  boolean tooLow = getWristAngle() - wristTolerance <  angle;
+    boolean tooHigh = getWristAngle() - wristTolerance > angle;
+
+  if(tooHigh || tooLow){
+    return false;
+  } else {
+    return true;
+  }
+  }
 
   @Override
   public void enabledPeriodic() {
@@ -56,11 +66,11 @@ public class WristSubsystem extends LifecycleSubsystem {
   }
 
   public Command setPositionCommand(double angle) {
-    return runOnce(
+    return run(
         () -> {
           goalAngle = angle;
           active = true;
-        });
+        }).until(() -> atAngle(angle) == true);
   }
 
   private double getWristAngle() {
