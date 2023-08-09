@@ -8,6 +8,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.util.scheduling.LifecycleSubsystemManager;
@@ -19,7 +20,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 
 public class Robot extends LoggedRobot {
   private WristSubsystem wrist = new WristSubsystem(new TalonFX(16));
-  private CommandXboxController XboxController = new XboxController(0);
+  private XboxController XboxController = new XboxController(0);
 
 
   public Robot() {
