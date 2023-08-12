@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.util.scheduling.LifecycleSubsystemManager;
@@ -20,13 +22,16 @@ public class Robot extends LoggedRobot {
   public Robot() {
     Logger.getInstance().addDataReceiver(new NT4Publisher());
     Logger.getInstance().start();
-    LifecycleSubsystemManager.getInstance().ready();
 
     controller.a().onTrue(wrist.getDisabledCommand());
     controller.b().onTrue(wrist.getZeroCommand());
     controller.x().onTrue(wrist.setPositionCommand(10));
     controller.y().onTrue(wrist.setPositionCommand(50));
     controller.rightTrigger().onTrue(wrist.getPositionSequenceCommand());
+
+    LifecycleSubsystemManager.getInstance().ready();
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
   }
 
   @Override
