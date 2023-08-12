@@ -4,17 +4,15 @@
 
 package frc.robot.wrist;
 
-import org.littletonrobotics.junction.Logger;
-
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.util.scheduling.LifecycleSubsystem;
 import frc.robot.util.scheduling.SubsystemPriority;
+import org.littletonrobotics.junction.Logger;
 
 public class WristSubsystem extends LifecycleSubsystem {
   private double wristTolerance = 1;
@@ -23,7 +21,6 @@ public class WristSubsystem extends LifecycleSubsystem {
   private boolean active = false;
   private TalonFX motor;
   private PositionDutyCycle controlRequest = new PositionDutyCycle(0);
-
 
   public WristSubsystem(TalonFX motor) {
     super(SubsystemPriority.WRIST);
@@ -39,7 +36,6 @@ public class WristSubsystem extends LifecycleSubsystem {
     motorConfig.Slot0.kD = 0;
 
     motor.getConfigurator().apply(motorConfig);
-
   }
 
   @Override
@@ -86,12 +82,12 @@ public class WristSubsystem extends LifecycleSubsystem {
     StatusSignal<Double> wristMotorRotations = motor.getPosition();
     return wristMotorRotations.getValue() * 360.0;
   }
+
   @Override
   public void robotPeriodic() {
-  Logger.getInstance().recordOutput("Wrist/Angle",getWristAngle());
-  Logger.getInstance().recordOutput("Wrist/GoalAngle",goalAngle);
-  Logger.getInstance().recordOutput("Wrist/Active",active);
-  Logger.getInstance().recordOutput("Wrist/Zeroed",zeroed);
-
+    Logger.getInstance().recordOutput("Wrist/Angle", getWristAngle());
+    Logger.getInstance().recordOutput("Wrist/GoalAngle", goalAngle);
+    Logger.getInstance().recordOutput("Wrist/Active", active);
+    Logger.getInstance().recordOutput("Wrist/Zeroed", zeroed);
   }
 }
