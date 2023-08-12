@@ -18,6 +18,7 @@ public class WristSubsystem extends LifecycleSubsystem {
   private boolean active = false;
   private TalonFX motor;
   private VoltageOut controlRequest = new VoltageOut(0);
+  private double kP = 0.1;
 
   public WristSubsystem(TalonFX motor) {
     super(SubsystemPriority.WRIST);
@@ -28,13 +29,9 @@ public class WristSubsystem extends LifecycleSubsystem {
   @Override
   public void enabledPeriodic() {
     if (active && zeroed) {
-      if (getWristAngle() > goalAngle - wristTolerance) {
-        motor.setControl(controlRequest.withOutput(-1));
-      } else if (getWristAngle() < goalAngle + wristTolerance) {
-        motor.setControl(controlRequest.withOutput(1));
-      } else {
-        motor.disable();
-      }
+      double error = goalAngle - getWristAngle();
+
+      motor.setControl(controlRequest.withOutput(error * kP));
     } else {
       motor.disable();
     }
