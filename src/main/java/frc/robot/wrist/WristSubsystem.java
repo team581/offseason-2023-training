@@ -33,10 +33,10 @@ public class WristSubsystem extends LifecycleSubsystem {
       } else if (getWristAngle() < goalAngle + wristTolerance) {
         motor.setControl(controlRequest.withOutput(1));
       } else {
-        motor.setControl(controlRequest.withOutput(0));
+        motor.disable();
       }
     } else {
-      motor.setControl(controlRequest.withOutput(0));
+      motor.disable();
     }
   }
 
