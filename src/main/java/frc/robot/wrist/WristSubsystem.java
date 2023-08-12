@@ -5,8 +5,11 @@
 package frc.robot.wrist;
 
 import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.util.scheduling.LifecycleSubsystem;
 import frc.robot.util.scheduling.SubsystemPriority;
@@ -17,24 +20,30 @@ public class WristSubsystem extends LifecycleSubsystem {
   private boolean zeroed = false;
   private boolean active = false;
   private TalonFX motor;
-  private VoltageOut controlRequest = new VoltageOut(0);
+  private PositionDutyCycle controlRequest = new PositionDutyCycle(0);
+
 
   public WristSubsystem(TalonFX motor) {
     super(SubsystemPriority.WRIST);
 
     this.motor = motor;
+
+    TalonFXConfiguration motorConfig = new TalonFXConfiguration();
+    motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    motorConfig.Feedback.SensorToMechanismRatio = 25.0 * 2.0;
+
+    motorConfig.Slot0.kP = 4.0;
+    motorConfig.Slot0.kI = 0;
+    motorConfig.Slot0.kD = 0;
+
+    motor.getConfigurator().apply(motorConfig);
+
   }
 
   @Override
   public void enabledPeriodic() {
     if (active && zeroed) {
-      if (getWristAngle() > goalAngle - wristTolerance) {
-        motor.setControl(controlRequest.withOutput(-1));
-      } else if (getWristAngle() < goalAngle + wristTolerance) {
-        motor.setControl(controlRequest.withOutput(1));
-      } else {
-        motor.disable();
-      }
+      motor.setControl(controlRequest.withPosition(goalAngle / 360.0));
     } else {
       motor.disable();
     }
@@ -72,7 +81,7 @@ public class WristSubsystem extends LifecycleSubsystem {
   }
 
   private double getWristAngle() {
-    StatusSignal<Double> wristMotorRotations = motor.getRotorPosition();
-    return wristMotorRotations.getValue() / 50.0 * 360.0;
+    StatusSignal<Double> wristMotorRotations = motor.getPosition();
+    return wristMotorRotations.getValue() * 360.0;
   }
 }
