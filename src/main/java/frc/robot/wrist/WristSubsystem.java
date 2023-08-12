@@ -4,6 +4,8 @@
 
 package frc.robot.wrist;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -83,5 +85,13 @@ public class WristSubsystem extends LifecycleSubsystem {
   private double getWristAngle() {
     StatusSignal<Double> wristMotorRotations = motor.getPosition();
     return wristMotorRotations.getValue() * 360.0;
+  }
+  @Override
+  public void robotPeriodic() {
+  Logger.getInstance().recordOutput("Wrist/Angle",getWristAngle());
+  Logger.getInstance().recordOutput("Wrist/GoalAngle",goalAngle);
+  Logger.getInstance().recordOutput("Wrist/Active",active);
+  Logger.getInstance().recordOutput("Wrist/Zeroed",zeroed);
+
   }
 }
