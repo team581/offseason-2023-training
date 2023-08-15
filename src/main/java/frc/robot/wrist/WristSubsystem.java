@@ -30,6 +30,9 @@ public class WristSubsystem extends LifecycleSubsystem {
 
     // Set neutral mode to brake (instead of coast)
     motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    // Set current limits
+    motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    motorConfig.CurrentLimits.SupplyCurrentLimit = 25;
     // Set the gearing of the motor
     motorConfig.Feedback.SensorToMechanismRatio = 25.0 * 2.0;
     // Set our PID constants
