@@ -33,7 +33,7 @@ public class WristSubsystem extends LifecycleSubsystem {
     // Set the gearing of the motor
     motorConfig.Feedback.SensorToMechanismRatio = 25.0 * 2.0;
     // Set our PID constants
-    motorConfig.Slot0.kP = 0.001;
+    motorConfig.Slot0.kP = 4;
     motorConfig.Slot0.kI = 0;
     motorConfig.Slot0.kD = 0;
 
