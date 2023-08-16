@@ -13,9 +13,13 @@ import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 
+import frc.robot.intake.IntakeState;
+import frc.robot.intake.IntakeSubsystem;
+
 public class Robot extends LoggedRobot {
   private WristSubsystem wrist = new WristSubsystem(new TalonFX(16));
   private CommandXboxController controller = new CommandXboxController(0);
+  private IntakeSubsystem intake = new IntakeSubsystem(new TalonFX(17));
 
   public Robot() {
     Logger.getInstance().addDataReceiver(new NT4Publisher());
@@ -26,7 +30,7 @@ public class Robot extends LoggedRobot {
     controller.b().onTrue(wrist.getZeroCommand());
     controller.x().onTrue(wrist.setPositionCommand(10));
     controller.y().onTrue(wrist.setPositionCommand(50));
-    controller.rightTrigger().onTrue(wrist.getPositionSequenceCommand());
+    controller.rightTrigger().onTrue(wrist.setPositionCommand(40).andThen(intake.setIntakeStateCommand(IntakeState.OUTTAKE_CUBE).andThen(wrist.setPositionCommand(10))));
   }
 
   @Override

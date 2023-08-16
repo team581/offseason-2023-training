@@ -69,10 +69,14 @@ public class WristSubsystem extends LifecycleSubsystem {
 
   public Command setPositionCommand(double angle) {
     return run(() -> {
-          goalAngle = angle;
+          setPosition(angle);
           active = true;
         })
         .until(() -> atAngle(angle));
+  }
+
+  public void setPosition(double angle) {
+    goalAngle = angle;
   }
 
   public Command getPositionSequenceCommand() {
