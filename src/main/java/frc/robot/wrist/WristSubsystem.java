@@ -75,8 +75,8 @@ public class WristSubsystem extends LifecycleSubsystem {
         .until(() -> atAngle(angle));
   }
 
-  public Command getPositionSequenceCommand() {
-    return setPositionCommand(10).andThen(setPositionCommand(50)).andThen(setPositionCommand(10));
+  public Command getPositionSequenceCommand(int sequence1, int sequence2, int sequence3) {
+    return setPositionCommand(sequence1).andThen(setPositionCommand(sequence2)).andThen(setPositionCommand(sequence3));
   }
 
   private boolean atAngle(double angle) {
